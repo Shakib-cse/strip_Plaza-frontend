@@ -8,7 +8,7 @@ export default function DetailsHeroSection() {
   return (
     <section className="paper-texture comic-border p-6 md:p-8">
       {/* Main Article */}
-      <div className="md:col-span-9 space-y-4 border-4 bg-background border-foreground p-8">
+      <div className="md:col-span-9 space-y-4 border-2 bg-background border-foreground p-8">
         <h1 className="font-comic text-4xl md:text-5xl text-primary drop-shadow-[1px_1px_0_#000,_-1px_1px_0_#000,_1px_-1px_0_#000,_-1px_-1px_0_#000]">
           STRIP PLAZA LAUNCHES
         </h1>
