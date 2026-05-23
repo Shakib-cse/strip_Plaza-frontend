@@ -22,6 +22,14 @@ export default function Navbar() {
       return pathname === "/" || pathname.startsWith("/news-details/");
     }
 
+    if (href === "/agenda") {
+      return (
+        pathname === "/agenda" ||
+        pathname.startsWith("/agenda/") ||
+        pathname.startsWith("/agenda-details/")
+      );
+    }
+
     return pathname === href || pathname.startsWith(`${href}/`);
   };
 

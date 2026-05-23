@@ -88,8 +88,8 @@ const newsData: Record<string, NewsItem[]> = {
 
 function NewsCard({ title, items }: { title: string; items: NewsItem[] }) {
   return (
-    <div className="paper-texture comic-border p-4 mt-8 border-4 bg-background border-foreground">
-      <h3 className="font-comic text-xl text-red-600 mb-4 border-b-2 border-black pb-2">
+    <div className="paper-texture comic-border p-4 mt-8 border-2 bg-background border-foreground">
+      <h3 className="font-comic text-xl text-primary mb-4 border-b-2 border-black pb-2">
         {title}
       </h3>
 
@@ -100,7 +100,7 @@ function NewsCard({ title, items }: { title: string; items: NewsItem[] }) {
               {item.date}
             </span>
             <div>
-              <p className="text-sm font-bold text-gray-800 group-hover:text-red-600 transition-colors">
+              <p className="text-sm font-bold text-gray-800 group-hover:text-primary transition-colors">
                 {item.title}
               </p>
               {item.excerpt && (
@@ -113,7 +113,7 @@ function NewsCard({ title, items }: { title: string; items: NewsItem[] }) {
         ))}
       </div>
 
-      <button className="mt-4 text-red-600 font-bold text-sm hover:underline font-comic">
+      <button className="mt-4 text-primary font-bold text-sm hover:underline font-comic">
         + MORE
       </button>
     </div>

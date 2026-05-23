@@ -9,7 +9,7 @@ export default function HeroSection() {
     <section className="paper-texture comic-border p-6 md:p-8">
       <div className="grid md:grid-cols-12 gap-6">
         {/* Main Article */}
-        <div className="md:col-span-9 space-y-4 border-4 bg-background border-foreground p-8">
+        <div className="md:col-span-9 space-y-4 border-2 bg-background border-foreground p-8">
           <h1 className="font-comic text-4xl md:text-5xl text-primary drop-shadow-[1px_1px_0_#000,_-1px_1px_0_#000,_1px_-1px_0_#000,_-1px_-1px_0_#000]">
             STRIP PLAZA LAUNCHES
           </h1>
@@ -49,7 +49,10 @@ export default function HeroSection() {
               </button>
             </div>
 
-            <Link href="/news-details/1" className="text-primary font-bold hover:underline font-comic text-lg">
+            <Link
+              href="/news-details/1"
+              className="text-primary font-bold hover:underline font-comic text-lg"
+            >
               [MORE]
             </Link>
           </div>
@@ -57,7 +60,7 @@ export default function HeroSection() {
 
         {/* Featured Comic Preview */}
         <div className="md:col-span-3 space-y-3">
-          <div className="comic-border border-4 bg-background border-foreground p-1">
+          <div className="comic-border border-2 bg-background border-foreground p-1">
             <div className="flex items-center justify-center">
               <div className="text-center">
                 <div className="font-comic text-sm mb-2">
