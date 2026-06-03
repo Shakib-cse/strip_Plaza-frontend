@@ -1,10 +1,56 @@
 "use client";
 
+import { Bell, Share2, ThumbsDown, ThumbsUp } from "lucide-react";
 import Image from "next/image";
-import { ThumbsUp, ThumbsDown, MessageCircle, Eye } from "lucide-react";
-import Link from "next/link";
+import { useState } from "react";
 
 export default function DetailsHeroSection() {
+  const [reaction, setReaction] = useState<"like" | "dislike" | null>(null);
+  const [attentionActive, setAttentionActive] = useState(false);
+  const [shareMessage, setShareMessage] = useState("");
+
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "/";
+
+  const handleActionClick = async (
+    action: "like" | "dislike" | "attention" | "share",
+  ) => {
+    if (action === "like" || action === "dislike") {
+      setReaction((current) => (current === action ? null : action));
+      return;
+    }
+
+    if (action === "attention") {
+      setAttentionActive((current) => !current);
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setShareMessage("Share link copied to clipboard.");
+      window.setTimeout(() => setShareMessage(""), 1800);
+    } catch {
+      setShareMessage("Unable to copy the share link right now.");
+      window.setTimeout(() => setShareMessage(""), 1800);
+    }
+  };
+
+  const actionStyles = {
+    like:
+      reaction === "like"
+        ? "border-red-600 bg-red-100 text-red-700"
+        : "border-foreground bg-background text-foreground",
+    dislike:
+      reaction === "dislike"
+        ? "border-slate-700 bg-slate-200 text-slate-900"
+        : "border-foreground bg-background text-foreground",
+    attention: attentionActive
+      ? "border-yellow-500 bg-yellow-200 text-yellow-800"
+      : "border-foreground bg-background text-foreground",
+    share: shareMessage
+      ? "border-green-600 bg-green-100 text-green-700"
+      : "border-foreground bg-background text-foreground",
+  } as const;
+
   return (
     <section className="paper-texture comic-border p-6 md:p-8">
       {/* Main Article */}
@@ -43,19 +89,51 @@ export default function DetailsHeroSection() {
         </p>
 
         <div className="flex items-center justify-between pt-4">
-          <div className="flex gap-2">
-            <button className="comic-btn p-2 bg-background border-2 border-foreground drop-shadow-[2px_2px_0_#000]">
-              <ThumbsUp className="w-5 h-5 text-primary" />
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => handleActionClick("like")}
+              className={`comic-btn p-2 border-2 drop-shadow-[2px_2px_0_#000] transition-colors ${actionStyles.like}`}
+              aria-label="Like"
+              title="Like"
+            >
+              <ThumbsUp className="w-5 h-5" />
             </button>
-            <button className="comic-btn p-2 bg-background border-2 border-foreground drop-shadow-[2px_2px_0_#000]">
+            <button
+              type="button"
+              onClick={() => handleActionClick("dislike")}
+              className={`comic-btn p-2 border-2 drop-shadow-[2px_2px_0_#000] transition-colors ${actionStyles.dislike}`}
+              aria-label="Dislike"
+              title="Dislike"
+            >
               <ThumbsDown className="w-5 h-5" />
             </button>
-            <button className="comic-btn p-2 bg-background border-2 border-foreground drop-shadow-[2px_2px_0_#000]">
-              <MessageCircle className="w-5 h-5" />
+            <button
+              type="button"
+              onClick={() => handleActionClick("attention")}
+              className={`comic-btn p-2 border-2 drop-shadow-[2px_2px_0_#000] transition-colors ${actionStyles.attention}`}
+              aria-label="Attention"
+              title="Attention"
+            >
+              <Bell className="w-5 h-5" />
             </button>
-            <button className="comic-btn p-2 bg-background border-2 border-foreground drop-shadow-[2px_2px_0_#000]">
-              <Eye className="w-5 h-5" />
+            <button
+              type="button"
+              onClick={() => handleActionClick("share")}
+              className={`comic-btn p-2 border-2 drop-shadow-[2px_2px_0_#000] transition-colors ${actionStyles.share}`}
+              aria-label="Share link"
+              title={shareMessage || "Share link"}
+            >
+              <Share2 className="w-5 h-5" />
             </button>
+          </div>
+
+          <div className="flex flex-col items-end gap-2">
+            {shareMessage && (
+              <p className="text-xs font-bold text-green-700 font-comic">
+                {shareMessage}
+              </p>
+            )}
           </div>
         </div>
       </div>

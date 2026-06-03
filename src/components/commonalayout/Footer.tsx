@@ -2,23 +2,22 @@ import Image from "next/image";
 import Link from "next/link";
 
 const exploreLinks = [
-  { label: "Home", href: "/" },
-  { label: "Comic News", href: "#news" },
-  { label: "Calendar", href: "#agenda" },
-  { label: "Comic Database", href: "#database" },
+  { label: "News", href: "/" },
+  { label: "Agenda", href: "/agenda" },
+  { label: "Database", href: "/stripdatabase" },
+  { label: "Online Strip Beurs", href: "/onlinestripbeurs" },
+  { label: "Info", href: "/info" },
 ];
 
-const communityLinks = [
-  { label: "Online Comic Con", href: "#" },
-  { label: "Info", href: "#info" },
-  { label: "Newsletter", href: "#" },
-  { label: "Contact", href: "#" },
-  { label: "Online APP", href: "#" },
-];
+  // const communityLinks = [
+  //   { label: "Newsletter", href: "#" },
+  //   { label: "Contact", href: "#" },
+  //   { label: "Online APP", href: "#" },
+  // ];
 
 export default function Footer() {
   return (
-    <footer className="mt-12 border-t-4 border-black border-dashed bg-[#e9e9a3]">
+    <footer className="mt-12 border-t-4 border-foreground border-dashed bg-[#e9e9a3]">
       <div className="container mx-auto px-4 py-12">
         <div className="flex gap-8 justify-around items-top w-full">
           {/* Brand */}
@@ -58,7 +57,7 @@ export default function Footer() {
           </div>
 
           {/* Community */}
-          <div>
+          {/* <div>
             <h4 className="font-comic text-lg mb-4 text-gray-900">COMMUNITY</h4>
             <ul className="space-y-2">
               {communityLinks.map((link) => (
@@ -72,7 +71,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-12 pt-6 border-t-2 border-black/20 text-center">

@@ -1,92 +1,11 @@
 "use client";
 
-interface NewsItem {
-  date: string;
-  title: string;
-  excerpt: string;
-}
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import type { NewsItem as NewsItemType } from "@/lib/news";
+import { fetchNews } from "@/lib/news";
 
-const newsData: Record<string, NewsItem[]> = {
-  "GRAPHIC NOVEL NEWS": [
-    {
-      date: "Nov 22",
-      title: "Five new items added to the archives.",
-      excerpt:
-        "Read them all online now and discover what's new in the world of comics.",
-    },
-    {
-      date: "Nov 18",
-      title: "Comic con in Antwerp this Saturday.",
-      excerpt: "Make sure you're there for the latest releases!",
-    },
-    {
-      date: "Nov 15",
-      title: "Interview with the artist of 'The Collector'.",
-      excerpt: "Learn everything about his creative process.",
-    },
-    {
-      date: "Nov 11",
-      title: "Update to the Comic Database with over 500 new titles.",
-      excerpt: "",
-    },
-  ],
-  "COMIC NEWS": [
-    {
-      date: "Nov 22",
-      title: "Five new items added to the archives.",
-      excerpt:
-        "Read them all online now and discover what's new in the world of comics.",
-    },
-    {
-      date: "Nov 18",
-      title: "Comic con in Antwerp this Saturday.",
-      excerpt: "Make sure you're there for the latest releases!",
-    },
-    {
-      date: "Nov 15",
-      title: "Interview with the artist of 'The Collector'.",
-      excerpt: "Learn everything about his creative process.",
-    },
-    {
-      date: "Nov 11",
-      title: "Update to the Comic Database with over 500 new titles.",
-      excerpt: "",
-    },
-  ],
-  "MOVIE NEWS": [
-    {
-      date: "Nov 22",
-      title: "Five new items added to the archives.",
-      excerpt:
-        "Read them all online now and discover what's new in the world of comics.",
-    },
-    {
-      date: "Nov 18",
-      title: "Comic con in Antwerp this Saturday.",
-      excerpt: "Make sure you're there for the latest releases!",
-    },
-    {
-      date: "Nov 15",
-      title: "Interview with the artist of 'The Collector'.",
-      excerpt: "Learn everything about his creative process.",
-    },
-  ],
-  "GENERAL NEWS": [
-    {
-      date: "Nov 22",
-      title: "Five new items added to the archives.",
-      excerpt:
-        "Read them all online now and discover what's new in the world of comics.",
-    },
-    {
-      date: "Nov 18",
-      title: "Comic con in Antwerp this Saturday.",
-      excerpt: "Make sure you're there for the latest releases!",
-    },
-  ],
-};
-
-function NewsCard({ title, items }: { title: string; items: NewsItem[] }) {
+function NewsCard({ title, items }: { title: string; items: NewsItemType[] }) {
   return (
     <div className="paper-texture comic-border p-4 mt-8 border-2 bg-background border-foreground">
       <h3 className="font-comic text-xl text-primary mb-4 border-b-2 border-black pb-2">
@@ -94,8 +13,12 @@ function NewsCard({ title, items }: { title: string; items: NewsItem[] }) {
       </h3>
 
       <div className="space-y-4">
-        {items.map((item, idx) => (
-          <div key={idx} className="flex gap-3 group cursor-pointer">
+        {items.map((item) => (
+          <Link
+            key={item.id}
+            href={`/news-details/${item.id}`}
+            className="flex gap-3 group"
+          >
             <span className="text-xs font-bold text-gray-500 mt-1 shrink-0 w-12">
               {item.date}
             </span>
@@ -109,7 +32,7 @@ function NewsCard({ title, items }: { title: string; items: NewsItem[] }) {
                 </p>
               )}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
@@ -121,9 +44,21 @@ function NewsCard({ title, items }: { title: string; items: NewsItem[] }) {
 }
 
 export default function NewsGrid() {
+  const [data, setData] = useState<Record<string, NewsItemType[]>>({});
+
+  useEffect(() => {
+    let mounted = true;
+    fetchNews().then((res) => {
+      if (mounted) setData(res);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <section className="grid md:grid-cols-2 gap-6 mx-8">
-      {Object.entries(newsData).map(([category, items]) => (
+      {Object.entries(data).map(([category, items]) => (
         <NewsCard key={category} title={category} items={items} />
       ))}
     </section>
